@@ -1,0 +1,4 @@
+venv
+mock-data.json
+.idea
+__pycache__
