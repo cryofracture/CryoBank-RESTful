@@ -5,13 +5,13 @@ app = Flask(__name__)
 
 
 @app.get("/")
-async def root():
+def root():
     f = open('mock-array-data.json', "r")
     all_data = json.load(f)
     return jsonify(all_data)
 
 @app.route("/api/v1/user_count", methods=['GET'])
-async def count_users():
+def count_users():
     data = open("mock-array-data.json", "r")
     all_users = json.load(data)
     user_count = 0
@@ -20,7 +20,7 @@ async def count_users():
     return jsonify({'total registered users': user_count})
 
 @app.route("/api/v1/user_count/<string:requested_data>", methods=['GET'])
-async def count_requested_data(requested_data):
+def count_requested_data(requested_data):
     data = json.load(open("mock-array-data.json", "r"))
     if requested_data == "email":
         users_with_email = 0
@@ -38,7 +38,7 @@ async def count_requested_data(requested_data):
         return jsonify({'ERROR': 'bad request'})
 
 @app.route("/api/v1/total_balance", methods=['GET'])
-async def get_total_balance():
+def get_total_balance():
     data = json.load(open("mock-array-data.json"))
     bank_balance = 0
     users = [user for user in data]
@@ -47,7 +47,7 @@ async def get_total_balance():
     return jsonify({'bank balance sheet': f'{bank_balance:,}'})
 
 @app.route('/api/v1/user/<int:user_id>', methods=['GET'])
-async def get_user(user_id):
+def get_user(user_id):
     data = open('mock-array-data.json', 'r')
     users = json.load(data)
     users = [user for user in users if user['id'] == user_id]
@@ -55,5 +55,5 @@ async def get_user(user_id):
         abort(404)
     return jsonify({'user': users[0]})
 
-if __name__ == "__main__"
+if __name__ == "__main__":
     app.run(debug=True)
